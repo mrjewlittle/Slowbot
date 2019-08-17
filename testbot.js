@@ -30,6 +30,8 @@ function processCommand(message)
 	let fullCommand = message.content.substr(1) // Remove the leading exclamation mark
     let splitCommand = fullCommand.split(" ") // Split the message up in to pieces for each space
     let primaryCommand = splitCommand[0] // The first word directly after the exclamation is the command
+	let currLocation = splitCommand[1] //current location of user
+	let direction = splitCommand[2] //direction user wants to move in
     let arguments = splitCommand.slice(1) // All other words are arguments/parameters/options for the command
 	
 	if (primaryCommand == "ping")
@@ -54,6 +56,163 @@ function processCommand(message)
 		message.channel.send("Restart me manually please.")
 		bot.destroy()
 	}
+	else if (primaryCommand == "a1-down")
+	{
+		 //make a placeholder string to perform the functions on
+		 var str = new String()
+		 str = primaryCommand.toString();
+		 
+		 //grab the location of the char to increment 
+		 var replacement = str.charAt(0);
+		 var newValue = String.fromCharCode(replacement.charCodeAt(0) + 1)
+		 
+		 var newCommand = str.replace(replacement, newValue)
+		 
+		 message.channel.send(newCommand)
+	}
+	else if (primaryCommand == "move")
+	{
+		if (!currLocation || !direction)
+		{
+			message.channel.send("Please use proper command: !move <current location (a1)> <direction>")
+		}
+		else
+		{
+			//Find ID of what they think is the current location
+			var currID = new String()
+			currID = message.guild.channels.find(channel => channel.name.includes(currLocation).toString())
+			
+			message.channel.send(currID)
+			
+			//Check to see if they are in the spot they say they are
+			if (currID != message.channel.id)
+			{
+				message.channel.send("You did you put the proper current location. Please try again")
+			}
+			
+			else
+			{
+				//grab the location of the char to increment 
+				var replacement = str.charAt(0);
+		 
+				//determine location moved to
+			}
+			
+			//608906102318432265
+		}
+	}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	else if (primaryCommand == "east")
+	{
+		 //make a placeholder string to perform the functions on
+		 var str = new String()
+		 str = primaryCommand.toString();
+		 
+		 //grab the location of the char to increment 
+		 var replacement = str.charAt(0);
+		 if (replacement == 'm')
+		 {
+			 message.channel.send("You cannot move in that direction from here.")
+		 }
+		 else
+		 {
+			var newValue = String.fromCharCode(replacement.charCodeAt(0) + 1)
+		 
+			var newCommand = str.replace(replacement, newValue)
+		 
+			message.channel.send(newCommand)
+		 }
+	}
+	else if (primaryCommand == "west")
+	{
+		 //make a placeholder string to perform the functions on
+		 var str = new String()
+		 str = primaryCommand.toString();
+		 
+		 //grab the location of the char to increment 
+		 var replacement = str.charAt(0);
+		 if (replacement == 'a')
+		 {
+			 message.channel.send("You cannot move in that direction from here.")
+		 }
+		 else
+		 {
+			var newValue = String.fromCharCode(replacement.charCodeAt(0) - 1)
+		 
+			var newCommand = str.replace(replacement, newValue)
+		 
+			message.channel.send(newCommand)
+		 }
+	}
+	else if (primaryCommand == "south")
+	{
+		 //make a placeholder string to perform the functions on
+		 var str = new String()
+		 str = primaryCommand.toString();
+		 
+		 //grab the location of the char to increment 
+		 var replacement = str.charAt(1);
+		 if (replacement == '')
+		 {
+			 message.channel.send("You cannot move in that direction from here.")
+		 }
+		 else
+		 {
+			var newValue = String.fromCharCode(replacement.charCodeAt(1) + 1)
+		 
+			var newCommand = str.replace(replacement, newValue)
+		 
+			message.channel.send(newCommand)
+		 }
+	}
+	else if (primaryCommand == "north")
+	{
+		 //make a placeholder string to perform the functions on
+		 var str = new String()
+		 str = primaryCommand.toString();
+		 
+		 //grab the location of the char to increment 
+		 var replacement = str.charAt(1);
+		 if (replacement == '1')
+		 {
+			 message.channel.send("You cannot move in that direction from here.")
+		 }
+		 else
+		 {
+			var newValue = String.fromCharCode(replacement.charCodeAt(0) - 1)
+		 
+			var newCommand = str.replace(replacement, newValue)
+		 
+			message.channel.send(newCommand)
+		 }
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	else if (primaryCommand == "sample-camp")
 	{
 		if (message.channel.id === "605958287112011796" || message.channel.id === "605958358058401824" || message.channel.id === "605958375704100864" || message.channel.id === "605958391214506020")
