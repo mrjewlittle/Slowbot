@@ -34,18 +34,7 @@ function processCommand(message)
 	let direction = splitCommand[2] //direction user wants to move in
     let arguments = splitCommand.slice(1) // All other words are arguments/parameters/options for the command
 	
-	if (primaryCommand == "ping")
-	{
-		message.channel.send("Pong!")
-	}
-	
-	else if (primaryCommand == "who-is-the-best")
-	{
-		message.channel.send("Will is the best!")
-		message.channel.send("Just kidding, everyone is the best!")
-	}
-	
-	else if (primaryCommand == "RESET")
+	if (primaryCommand == "RESET")
 	{
 		message.channel.send("Restarting")
 		bot.destroy()
@@ -74,399 +63,244 @@ function processCommand(message)
 	{
 		if (!currLocation || !direction)
 		{
-			message.channel.send("Please use proper command: !move <current location (a1)> <direction>")
+			message.channel.send("Please use proper command: (!move <current location (a1)> <direction>)")
 		}
 		else
 		{
 			//Find ID of what they think is the current location
 			var currID = new String()
-			currID = message.guild.channels.find(channel => channel.name.includes(currLocation).toString())
+			const currChannel = message.guild.channels.find(c => c.name.includes(currLocation))
 			
-			message.channel.send(currID)
 			
 			//Check to see if they are in the spot they say they are
-			if (currID != message.channel.id)
+			if (!currChannel)
+			{
+				message.channel.send("Please input a proper location")
+			}
+			
+			else if (currChannel.id != message.channel.id)
 			{
 				message.channel.send("You did you put the proper current location. Please try again")
 			}
 			
 			else
 			{
-				//grab the location of the char to increment 
-				var replacement = str.charAt(0);
+				
+				if (direction == "north")
+				{
+					//make a placeholder string to perform the functions on
+					var str = new String()
+					str = currLocation.toString();
 		 
-				//determine location moved to
-			}
-			
-			//608906102318432265
-		}
-	}
+					//grab the location of the char to increment 
+					var replacement = str.substring(1)
+					
+					//check if player is on north most edge so cannot move north more
+					if (replacement == "01")
+					{
+						message.channel.send("You cannot move in that direction from here.")
+					}
+					
+					//check if player is south of a boma wall. Cannot walk through wall
+					else if (str == "b06" || str == "c06" || str == "d06" || str == "e06" || str == "i13" || str == "j13" || str == "k13" || str == "l13")
+					{
+						message.channel.send("You cannot walk that direction. A boma wall blocks your path")
+					}
+					else if (str == "b02" || str == "c02" || str == "d02" || str == "e02" || str == "i09" || str == "j09" || str == "k09" || str == "l09")
+					{
+						message.channel.send("You cannot leave the boma this way")
+					}
+					
+					//if player can move north, then perform the move
+					else
+					{
+						//this is done since actual integer math cannot be done. Checks if player is in row 10
+						if (replacement.charAt(1) == "0")
+						{
+							var newCommand = currLocation.replace(replacement, "09")
+							message.channel.send(newCommand)
+						}
+						
+						//if not 10, can subtract no problem
+						else
+						{
+							//create new value
+							var firstDigit = replacement.charAt(0)
+							var secondDigit = String.fromCharCode(replacement.charCodeAt(1) - 1)
+							var newValue = firstDigit.concat(secondDigit)
+		 
+							var newCommand = currLocation.replace(replacement, newValue)
+						
+							//change players permissions. IE move them
+							movePlayer(message, newCommand)
+							deleteMessages(message)
+						}
+					}
+				}
+				
+				else if (direction == "east")
+				{
+					//make a placeholder string to perform the functions on
+					var str = new String()
+					str = currLocation.toString();
+		 
+					//grab the location of the char to increment 
+					var replacement = currLocation.charAt(0);
+					
+					//check if player is on east most edge so cannot move east more
+					if (replacement == 'm')
+					{
+						message.channel.send("You cannot move in that direction from here.")
+					}
+					
+					//check if player is west of a boma wall. Cannot walk through wall (minus samburu boma entrance)
+					else if (str == "h09" || str == "h11" || str == "h12" || str == "a02" || str == "a03" || str == "a04" || str == "a05")
+					{
+						message.channel.send("You cannot walk that direction. A boma wall blocks your path")
+					}
+					else if (str == "e02" || str == "e03" || str == "e05" || str == "l09" || str == "l10" || str == "l11" || str == "l12")
+					{
+						message.channel.send("You cannot leave the boma this way")
+					}
+					
+					else
+					{
+						//create new value
+						var newValue = String.fromCharCode(replacement.charCodeAt(0) + 1)
+						var newCommand = str.replace(replacement, newValue)
 		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	else if (primaryCommand == "east")
-	{
-		 //make a placeholder string to perform the functions on
-		 var str = new String()
-		 str = primaryCommand.toString();
+						//change players permissions. IE move them
+						movePlayer(message, newCommand)
+						deleteMessages(message)
+					}
+				}
+				
+				else if (direction == "south")
+				{
+					//make a placeholder string to perform the functions on
+					var str = new String()
+					str = currLocation.toString();
 		 
-		 //grab the location of the char to increment 
-		 var replacement = str.charAt(0);
-		 if (replacement == 'm')
-		 {
-			 message.channel.send("You cannot move in that direction from here.")
-		 }
-		 else
-		 {
-			var newValue = String.fromCharCode(replacement.charCodeAt(0) + 1)
+					//grab the location of the char to increment 
+					var replacement = str.substring(1)
+					
+					//check if player is on south most edge so cannot move south more
+					if (replacement == "13")
+					{
+						message.channel.send("You cannot move in that direction from here.")
+					}
+					
+					//check if player is north of a boma wall. Cannot walk through wall
+					else if (str == "i08" || str == "j08" || str == "k08" || str == "l08" || str == "b01" || str == "c01" || str == "d01" || str == "e01")
+					{
+						message.channel.send("You cannot walk that direction. A boma wall blocks your path")
+					}
+					else if (str == "b05" || str == "c05" || str == "d05" || str == "e05" || str == "i12" || str == "j12" || str == "k12" || str == "l12")
+					{
+						message.channel.send("You cannot leave the boma this way")
+					}
+					
+					else
+					{
+						//this is done since actual integer math cannot be done. Checks if player is in row 10
+						if (replacement.charAt(1) == "9")
+						{
+							var newCommand = currLocation.replace(replacement, "10")
+							message.channel.send(newCommand)
+						}
+						
+						//if not 10, can add no problem
+						else
+						{
+							//create new value
+							var firstDigit = replacement.charAt(0)
+							var secondDigit = String.fromCharCode(replacement.charCodeAt(1) + 1)
+							var newValue = firstDigit.concat(secondDigit)
 		 
-			var newCommand = str.replace(replacement, newValue)
-		 
-			message.channel.send(newCommand)
-		 }
-	}
-	else if (primaryCommand == "west")
-	{
-		 //make a placeholder string to perform the functions on
-		 var str = new String()
-		 str = primaryCommand.toString();
-		 
-		 //grab the location of the char to increment 
-		 var replacement = str.charAt(0);
-		 if (replacement == 'a')
-		 {
-			 message.channel.send("You cannot move in that direction from here.")
-		 }
-		 else
-		 {
-			var newValue = String.fromCharCode(replacement.charCodeAt(0) - 1)
-		 
-			var newCommand = str.replace(replacement, newValue)
-		 
-			message.channel.send(newCommand)
-		 }
-	}
-	else if (primaryCommand == "south")
-	{
-		 //make a placeholder string to perform the functions on
-		 var str = new String()
-		 str = primaryCommand.toString();
-		 
-		 //grab the location of the char to increment 
-		 var replacement = str.charAt(1);
-		 if (replacement == '')
-		 {
-			 message.channel.send("You cannot move in that direction from here.")
-		 }
-		 else
-		 {
-			var newValue = String.fromCharCode(replacement.charCodeAt(1) + 1)
-		 
-			var newCommand = str.replace(replacement, newValue)
-		 
-			message.channel.send(newCommand)
-		 }
-	}
-	else if (primaryCommand == "north")
-	{
-		 //make a placeholder string to perform the functions on
-		 var str = new String()
-		 str = primaryCommand.toString();
-		 
-		 //grab the location of the char to increment 
-		 var replacement = str.charAt(1);
-		 if (replacement == '1')
-		 {
-			 message.channel.send("You cannot move in that direction from here.")
-		 }
-		 else
-		 {
-			var newValue = String.fromCharCode(replacement.charCodeAt(0) - 1)
-		 
-			var newCommand = str.replace(replacement, newValue)
-		 
-			message.channel.send(newCommand)
-		 }
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	else if (primaryCommand == "sample-camp")
-	{
-		if (message.channel.id === "605958287112011796" || message.channel.id === "605958358058401824" || message.channel.id === "605958375704100864" || message.channel.id === "605958391214506020")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
+							var newCommand = currLocation.replace(replacement, newValue)
 
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-north")
-	{
-		if (message.channel.id === "605958226542067715" || message.channel.id === "605958307395403796" || message.channel.id === "605958332133408778")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
+							//change players permissions. IE move them
+							movePlayer(message, newCommand)
+							deleteMessages(message)
+						}
+					}
+				}
+				
+				else if (direction == "west")
+				{
+					//make a placeholder string to perform the functions on
+					var str = new String()
+					str = currLocation.toString();
+		 
+					//grab the location of the char to increment 
+					var replacement = currLocation.charAt(0);
+					
+					//check if player is on west most edge so cannot move west more
+					if (replacement == 'a')
+					{
+						message.channel.send("You cannot move in that direction from here.")
+					}
+					
+					//check if player is east of a boma wall. Cannot walk through wall (minus boran boma entrance)
+					else if (str == "f02" || str == "f03" || str == "f05" || str == "m09" || str == "m10" || str == "m11" || str == "m12")
+					{
+						message.channel.send("You cannot walk that direction. A boma wall blocks your path")
+					}
+					else if (str == "b02" || str == "b03" || str == "b04" || str == "b05" || str == "i09" || str == "i11" || str == "i12")
+					{
+						message.channel.send("You cannot leave the boma this way")
+					}
+					
+					else
+					{
+						//create new value
+						var newValue = String.fromCharCode(replacement.charCodeAt(0) - 1)
+		 
+						var newCommand = str.replace(replacement, newValue)
 
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-northwest")
-	{
-		if (message.channel.id === "605958287112011796" || message.channel.id === "605958358058401824")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
-
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-northeast")
-	{
-		if (message.channel.id === "605958287112011796" || message.channel.id === "605958375704100864")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
-
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-west")
-	{
-		if (message.channel.id === "605958226542067715" || message.channel.id === "605958307395403796" || message.channel.id === "605958408096710656")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
-
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-east")
-	{
-		if (message.channel.id === "605958226542067715" || message.channel.id === "605958332133408778" || message.channel.id === "605958435892232222")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
-
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-south")
-	{
-		if (message.channel.id === "605958226542067715" || message.channel.id === "605958435892232222" || message.channel.id === "605958408096710656")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
-
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-southwest")
-	{
-		if (message.channel.id === "605958391214506020" || message.channel.id === "605958358058401824")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
-
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
-		}
-	}
-	else if (primaryCommand == "sample-southeast")
-	{
-		if (message.channel.id === "605958391214506020" || message.channel.id === "605958375704100864")
-		{
-			message.channel.overwritePermissions(message.author, 
-			{
-				VIEW_CHANNEL: false,
-				SEND_MESSAGES: false
-			});
-
-			const destination = message.guild.channels.find(channel => channel.name === primaryCommand);
-			destination.overwritePermissions(message.author,
-			{
-				VIEW_CHANNEL: true,
-				SEND_MESSAGES: true
-			});
-		}
-		else
-		{
-			message.channel.send("You can not get there from here")
+						//change players permissions. IE move them
+						movePlayer(message, newCommand)
+						deleteMessages(message)
+					}
+				}	
+			}
 		}
 	}
 	
 };
 
 bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.XQPRYA.07KBOaou5W9tYj8reGoe0ob6hFI")
-		
-		
-		
-		
-		
-		/*
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    if (message.substring(0, 1) == '!') 
-	{
-        var args = message.substring(1).split(' ');
-        var cmd = args[0];
-       
-        args = args.splice(1);
-        switch(cmd) 
-		{
-            // !ping
-            case 'ping':
-                bot.sendMessage({
-                    to: channelID,
-                    message: 'Pong!'
-                });
-            break;
-			
-			case 'who-is-the-best':
-				bot.sendMessage({
-					to: channelID,
-					message: 'Will is the best!!'
-				});
-				bot.sendMessage({
-					to: channelID,
-					message: 'Just kidding, Ryan is obviously'
-				});
-			break;
-			
-			case 'RESET':
-				bot.sendMessage
-				({
-					to: channelID,
-					message: 'Resetting...'
-				});
-				process.exit(1)
 
-			break;
-			
-			case 'sample-camp'
-				
-			break;
-		}
-				
-            // Just add any case commands if you want to..
-         
-    }
 
-});*/
+function movePlayer(message, newCommand)
+{
+						//change players permissions. IE move them
+						message.channel.overwritePermissions(message.author, 
+						{
+							VIEW_CHANNEL: false,
+							SEND_MESSAGES: false
+						});
+
+						const destination = message.guild.channels.find(c => c.name.includes(newCommand));
+						destination.overwritePermissions(message.author,
+						{
+							VIEW_CHANNEL: true,
+							SEND_MESSAGES: true
+						});
+}
+
+function deleteMessages(message)
+{
+	//set the person who's messages need to be deleted to the person who used the command
+	const user = message.author
+	
+	//fetch those messages
+	message.channel.fetchMessages({limit: 100,}).then((messages) => {
+	if (user) {
+	const filterBy = user ? user.id : Client.user.id;
+	//delete those messages
+	messages = messages.filter(m => m.author.id === filterBy).array().slice(0, 100);
+	}
+	message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
+})
+}
