@@ -106,7 +106,7 @@ function processCommand(message)
 						
 					//change players permissions. IE move them
 					movePlayer(message, newCommand)
-					deleteMessages(message)
+					deleteMessages(message, newCommand)
 				}
 			}
 	}
@@ -143,7 +143,7 @@ function processCommand(message)
 		
 				//change players permissions. IE move them
 				movePlayer(message, newCommand)
-				deleteMessages(message)
+				deleteMessages(message, newCommand)
 			}
 	}
 	
@@ -192,7 +192,7 @@ function processCommand(message)
 
 					//change players permissions. IE move them
 					movePlayer(message, newCommand)
-					deleteMessages(message)
+					deleteMessages(message, newCommand)
 				}
 			}
 	}
@@ -230,7 +230,7 @@ function processCommand(message)
 
 				//change players permissions. IE move them
 				movePlayer(message, newCommand)
-				deleteMessages(message)
+				deleteMessages(message, newCommand)
 			}
 	}	
 	
@@ -243,6 +243,7 @@ function movePlayer(message, newCommand)
 {
 	const destination = message.guild.channels.find(c => c.name.includes(newCommand));
 	
+	//checks if command is run in a safari channel
 	if(!destination)
 	{
 	}
@@ -264,11 +265,19 @@ function movePlayer(message, newCommand)
 	}
 }
 
-function deleteMessages(message)
+function deleteMessages(message, newCommand)
 {
 	//set the person who's messages need to be deleted to the person who used the command
 	const user = message.author
 	
+	//checks if command is run in a safari channel
+	const destination = message.guild.channels.find(c => c.name.includes(newCommand));
+	if(!destination)
+	{
+	}
+	
+	else
+	{
 	//fetch those messages
 	message.channel.fetchMessages({limit: 100,}).then((messages) => {
 	if (user) {
@@ -277,6 +286,7 @@ function deleteMessages(message)
 	messages = messages.filter(m => m.author.id === filterBy).array().slice(0, 100);
 	}
 	message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
-})
+	})
+	}
 }
 
