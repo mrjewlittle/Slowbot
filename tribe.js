@@ -8,22 +8,22 @@ class Tribe
 		this.foodStorage = 50;
 	}
 	
-	get woodStorage()
+	getWoodStorage()
 	{
 		return this.woodStorage;
 	}
 	
-	get waterStorage()
+	getWaterStorage()
 	{
 		return this.waterStorage;
 	}
 	
-	get foodStorage()
+	getFoodStorage()
 	{
 		return this.foodStorage;
 	}
 
-	set woodStorage(x)
+	setWoodStorage(x, message)
 	{
 		if (this.woodStorage + x > 100)
 		{
@@ -34,7 +34,7 @@ class Tribe
 		this.woodStorage = this.woodStorage + x
 	}
 	
-	set foodStorage(x)
+	setFoodStorage(x, message)
 	{
 		if (this.foodStorage + x > 150)
 		{
@@ -45,7 +45,7 @@ class Tribe
 		this.foodStorage = this.foodStorage + x
 	}
 	
-	set waterStorage(x)
+	setWaterStorage(x, message)
 	{
 		if (this.waterStorage + x > 300)
 		{
@@ -56,3 +56,4 @@ class Tribe
 		this.waterStorage = this.waterStorage + x
 	}
 }
+module.exports.Tribe = Tribe;

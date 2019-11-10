@@ -2,6 +2,9 @@ var Discord = require('discord.io');
 var DiscordJS = require('discord.js');
 var logger = require('winston');
 var auth = require('./botconfig.json');
+var later = require('later');
+var tribe = require('./tribe.js');
+var castaway = require('./castaway.js')
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -18,19 +21,24 @@ bot.on('ready', function (evt)
 });
 bot.on('message', (message) => 
 {
-	
-	if (message.content.startsWith("!"))
+	if (message.content.startsWith("$") && message.member.roles.find(r => r.name === 'Slowbot'))
 	{
 		processCommand(message)
 	}
 });
+
+const Boran = new tribe.Tribe('boran')
+const Samburu = new tribe.Tribe('samburu')
+let boranRole = "585576879793373207"
+let samburuRole = "585576943890726912"
+
 
 function processCommand(message)
 {
 	let fullCommand = message.content.substr(1) // Remove the leading exclamation mark
     let splitCommand = fullCommand.split(" ") // Split the message up in to pieces for each space
     let primaryCommand = splitCommand[0] // The first word directly after the exclamation is the command
-	let currLocation = splitCommand[1] //current location of user
+	let argument = splitCommand[1] //current location of user
 	let direction = splitCommand[2] //direction user wants to move in
     let arguments = splitCommand.slice(1) // All other words are arguments/parameters/options for the command
 	
@@ -38,26 +46,16 @@ function processCommand(message)
 	{
 		message.channel.send("Restarting")
 		bot.destroy()
-		bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.XQPRYA.07KBOaou5W9tYj8reGoe0ob6hFI")
 	}
 	else if (primaryCommand == "KILL")
 	{
 		message.channel.send("Restart me manually please")
 		bot.destroy()
 	}
-	else if (primaryCommand == "a1-down")
+	
+	else if (primaryCommand == "dummy")
 	{
-		 //make a placeholder string to perform the functions on
-		 var str = new String()
-		 str = primaryCommand.toString();
-		 
-		 //grab the location of the char to increment 
-		 var replacement = str.charAt(0);
-		 var newValue = String.fromCharCode(replacement.charCodeAt(0) + 1)
-		 
-		 var newCommand = str.replace(replacement, newValue)
-		 
-		 message.channel.send(newCommand)
+		lockout(message.member, message)
 	}
 	
 	else if (primaryCommand == "north")
@@ -83,6 +81,7 @@ function processCommand(message)
 			{
 				message.channel.send("You cannot leave the boma this way").then(msg => {msg.delete(3000)}).catch
 			}
+			
 					
 			//if player can move north, then perform the move
 			else
@@ -91,7 +90,6 @@ function processCommand(message)
 				if (replacement.charAt(1) == "0")
 				{
 					var newCommand = currLocation.replace(replacement, "09")
-					message.channel.send(newCommand)
 				}
 						
 				//if not 10, can subtract no problem
@@ -133,6 +131,29 @@ function processCommand(message)
 			else if (str == "e02" || str == "e03" || str == "e05" || str == "l09" || str == "l10" || str == "l11" || str == "l12")
 			{
 				message.channel.send("You cannot leave the boma this way").then(msg => {msg.delete(3000)}).catch
+			}
+			
+			else if (str == "e04" && isNight == true)
+			{
+				message.channel.send("You cannot leave the boma at night").then(msg => {msg.delete(3000)}).catch
+			}
+			else if (str == "h10")
+			{
+				if (message.member.roles.find(r => r.name === 'Samburu'))
+				{
+					//create new value
+					var newValue = String.fromCharCode(replacement.charCodeAt(0) + 1)
+					var newCommand = str.replace(replacement, newValue)
+		
+					//change players permissions. IE move them
+					movePlayer(message, newCommand)
+					deleteMessages(message, newCommand)
+				}
+				
+				else
+				{
+					message.channel.send("You cannot enter the other tribe's boma")
+				}
 			}
 					
 			else
@@ -177,7 +198,6 @@ function processCommand(message)
 				if (replacement.charAt(1) == "9")
 				{
 					var newCommand = currentLocation.replace(replacement, "10")
-					message.channel.send(newCommand)
 				}
 						
 				//if not 10, can add no problem
@@ -220,6 +240,30 @@ function processCommand(message)
 			{
 				message.channel.send("You cannot leave the boma this way").then(msg => {msg.delete(3000)}).catch
 			}
+			
+			else if (str == "i10" && isNight == true)
+			{
+				message.channel.send("You cannot leave the boma at night").then(msg => {msg.delete(3000)}).catch
+			}
+			
+			else if (str == "f04")
+			{
+				if (message.member.roles.find(r => r.name === 'Boran'))
+				{
+					//create new value
+					var newValue = String.fromCharCode(replacement.charCodeAt(0) + 1)
+					var newCommand = str.replace(replacement, newValue)
+		
+					//change players permissions. IE move them
+					movePlayer(message, newCommand)
+					deleteMessages(message, newCommand)
+				}
+				
+				else
+				{
+					message.channel.send("You cannot enter the other tribe's boma")
+				}
+			}
 					
 			else
 			{
@@ -234,9 +278,98 @@ function processCommand(message)
 			}
 	}	
 	
+	else if (primaryCommand == "storeWood")
+	{
+		var currentLocation = message.channel.name.toString()
+		var str = currentLocation.substring(0, 3)
+		
+		if (argument)
+		{
+			if (str == "b02")
+			{
+				Boran.setWoodStorage(argument, message)
+			}
+			else if (str == "l12")
+			{
+				Samburu.setWoodStorage(argument, message)
+			}
+			
+			else 
+			{
+				message.channel.send("You are not at your tribe's wood storage location")
+			}
+		}
+		
+		else
+		{
+			message.channel.send("Please include how much wood you want to store")
+		}
+	}
+	
+	else if (primaryCommand == "storeWater")
+	{
+		var currentLocation = message.channel.name.toString()
+		var str = currentLocation.substring(0, 3)
+		
+		if (argument)
+		{
+			if (str == "b03")
+			{
+				Boran.setWaterStorage(argument, message)
+			}
+			else if (str == "l11")
+			{
+				Samburu.setWaterStorage(argument, message)
+			}
+			else 
+			{
+				message.channel.send("You are not at your tribe's water storage location")
+			}
+		}
+		
+		else
+		{
+			message.channel.send("Please include how much wwater you want to store")
+		}
+	}
+	
+	else if (primaryCommand == "storeFood")
+	{
+		var currentLocation = message.channel.name.toString()
+		var str = currentLocation.substring(0, 3)
+		
+		if (argument)
+		{
+			if (str == "c02")
+			{
+				Boran.setFoodStorage(argument, message)
+			}
+			if (str == "k12")
+			{
+				Samburu.setFoodStorage(argument, message)
+			}
+			else 
+			{
+				message.channel.send("You are not at your tribe's water storage location")
+			}
+		}
+		
+		else
+		{
+			message.channel.send("Please include how much food you want to store")
+		}
+	}
+	
+	else if (primaryCommand == "wood")
+	{
+		var woodnumber = Samburu.getWoodStorage()
+		
+		message.channel.send(woodnumber)
+	}
+	
 };
 
-bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.XQPRYA.07KBOaou5W9tYj8reGoe0ob6hFI")
+bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.XWwrvQ.LZcOkr2_A4zGbos-GQj-45isDIk")
 
 
 function movePlayer(message, newCommand)
@@ -249,21 +382,22 @@ function movePlayer(message, newCommand)
 	}
 	else
 	{
-	//change players permissions. IE move them
-	message.channel.overwritePermissions(message.author, 
-	{
-		VIEW_CHANNEL: false,
-		SEND_MESSAGES: false
-	});
+		//change players permissions. IE move them
+		message.channel.overwritePermissions(message.author, 
+		{
+			VIEW_CHANNEL: false,
+			SEND_MESSAGES: false
+		});
 
-	const destination = message.guild.channels.find(c => c.name.includes(newCommand));
-	destination.overwritePermissions(message.author,
-	{
-		VIEW_CHANNEL: true,
-		SEND_MESSAGES: true
-	});
+		const destination = message.guild.channels.find(c => c.name.includes(newCommand));
+		destination.overwritePermissions(message.author,
+		{
+			VIEW_CHANNEL: true,
+			SEND_MESSAGES: true
+		});
 	}
 }
+
 
 function deleteMessages(message, newCommand)
 {
@@ -290,3 +424,99 @@ function deleteMessages(message, newCommand)
 	}
 }
 
+function lockout(user, message)
+{
+	message.channel.send("@" + message.member.nickname + " you are now locked for 10 minutes and cannot move from this location")
+	user.removeRole('617816630721904654')
+	var interval = setTimeout (function () 
+	{
+            // use the message's channel (TextChannel) to send a new message
+            message.channel.send("@" + message.member.nickname + " you can now move again")
+            .catch(console.error); // add error handling here
+			user.addRole('617816630721904654')
+    }, 1 * 600000); 
+}
+
+var textSched = later.parse.text('every 1 hour');
+var timer2 = later.setInterval(dayNight, textSched);
+var isNight = true;
+
+function dayNight()
+{
+	if (isNight)
+	{
+		isNight = false;
+		bot.channels.get("607575225902825482").send("It is now day time in the safari!")
+		return;
+	}
+	
+	else
+	{
+		isNight = true;
+		nightTimeShutdown();
+		backToCamp();
+		bot.channels.get("607575225902825482").send("It is now night time in the safari!")
+		//bot.channels.get("608908853731524608").send("It is now night time in the safari!")
+		//bot.channels.get("608911889749114910").send("It is now night time in the safari!")
+		return;
+	}
+}
+
+function backToCamp()
+{
+	let boranRole = "585576879793373207"
+	let samburuRole = "585576943890726912"
+	const slowvivor = bot.guilds.get("572085179154300930")
+	const boranTribe = slowvivor.roles.get(boranRole).members.map(m => m.id)
+	const samburuTribe = slowvivor.roles.get(samburuRole).members.map(m => m.id)
+	
+	function setPermsBoran(id)
+	{
+		const player = slowvivor.members.get(id)
+		slowvivor.channels.get("608911889749114910").overwritePermissions(player,
+		{
+			VIEW_CHANNEL: true,
+			SEND_MESSAGES: true
+		});
+	}
+	function setPermsSamburu(id)
+	{
+		const player = slowvivor.members.get(id)
+		slowvivor.channels.get("608908853731524608").overwritePermissions(player,
+		{
+			VIEW_CHANNEL: true,
+			SEND_MESSAGES: true
+		});
+	}
+		
+	boranTribe.forEach(setPermsBoran)
+	samburuTribe.forEach(setPermsSamburu)
+}
+
+function nightTimeShutdown()
+{
+	const slowvivor = bot.guilds.get("572085179154300930")
+	const samburuBomaZones = slowvivor.channels.get("608038938623606803").children.map(c => c.id)
+	const boranBomaZones = slowvivor.channels.get("608038915126984705").children.map(c => c.id)
+	const savannaZones = slowvivor.channels.get("608038662248071206").children.map(c => c.id)
+	const desertZones = slowvivor.channels.get("608907525802426368").children.map(c => c.id)
+	const congoZones = slowvivor.channels.get("608905863620460564").children.map(c => c.id)
+	const highlandsZones = slowvivor.channels.get("608038739121406025").children.map(c => c.id)
+		
+	function lock(id)
+	{
+		const spot = slowvivor.channels.get(id)
+		spot.lockPermissions()
+	}
+		
+	samburuBomaZones.forEach(lock)
+	boranBomaZones.forEach(lock)
+	savannaZones.forEach(lock)
+	desertZones.forEach(lock)
+	congoZones.forEach(lock)
+	highlandsZones.forEach(lock)
+}
+
+
+//Samburu role ID = 585576943890726912
+//Boran role ID = 585576879793373207
