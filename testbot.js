@@ -5,6 +5,7 @@ var auth = require('./botconfig.json');
 var later = require('later');
 var tribe = require('./tribe.js');
 var castaway = require('./castaway.js')
+var actions = require('./safariActions.js')
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -414,19 +415,21 @@ function deleteMessages(message, newCommand)
 	{
 	//fetch those messages
 	message.channel.fetchMessages({limit: 100,}).then((messages) => {
-	if (user) {
-	const filterBy = user ? user.id : Client.user.id;
-	//delete those messages
-	messages = messages.filter(m => m.author.id === filterBy).array().slice(0, 100);
+	if (user) 
+	{
+		const filterBy = user ? user.id : Client.user.id;
+		//delete those messages
+		messages = messages.filter(m => m.author.id === filterBy).array().slice(0, 100);
 	}
 	message.channel.bulkDelete(messages).catch(error => console.log(error.stack));
 	})
 	}
 }
 
-function lockout(user, message)
+function lockout(user, message, lockoutTime)
 {
-	message.channel.send("@" + message.member.nickname + " you are now locked for 10 minutes and cannot move from this location")
+	var stuckTime = (lockoutTime / 60000)
+	message.channel.send("@" + message.member.nickname + " you are now locked for " + stuckTime " minutes and cannot move from this location")
 	user.removeRole('617816630721904654')
 	var interval = setTimeout (function () 
 	{
@@ -434,10 +437,10 @@ function lockout(user, message)
             message.channel.send("@" + message.member.nickname + " you can now move again")
             .catch(console.error); // add error handling here
 			user.addRole('617816630721904654')
-    }, 1 * 600000); 
+    }, 1 * lockoutTime); 
 }
 
-var textSched = later.parse.text('every 1 hour');
+var textSched = later.parse.text('every 10 hours');
 var timer2 = later.setInterval(dayNight, textSched);
 var isNight = true;
 
