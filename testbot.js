@@ -4,8 +4,8 @@ var logger = require('winston');
 var auth = require('./botconfig.json');
 var later = require('later');
 var tribe = require('./tribe.js');
-var castaway = require('./castaway.js')
-var actions = require('./safariActions.js')
+var castaway = require('./castaway.js');
+const actions = require('./safariActions.js');
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -368,9 +368,15 @@ function processCommand(message)
 		message.channel.send(woodnumber)
 	}
 	
+	else if (primaryCommand == "climbBigTree")
+	{
+		var lockoutTime = actions.climbTallerTree(message);
+		lockout(message.member, message, lockoutTime);
+	}
+	
 };
 
-bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.XWwrvQ.LZcOkr2_A4zGbos-GQj-45isDIk")
+bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.Xg55pA.enBCN4Fj81i49WGMHl8ctOkUO6Y")
 
 
 function movePlayer(message, newCommand)
@@ -429,7 +435,7 @@ function deleteMessages(message, newCommand)
 function lockout(user, message, lockoutTime)
 {
 	var stuckTime = (lockoutTime / 60000)
-	message.channel.send("@" + message.member.nickname + " you are now locked for " + stuckTime " minutes and cannot move from this location")
+	message.channel.send("@" + message.member.nickname + " you are now locked for " + stuckTime + " minutes and cannot move from this location")
 	user.removeRole('617816630721904654')
 	var interval = setTimeout (function () 
 	{
