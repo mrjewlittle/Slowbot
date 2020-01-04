@@ -62,4 +62,21 @@ digInSand: function(message, user)
 	return;
 },
 
+whistleWithGrass: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 80) //80 percent chance to do this action
+	{
+		message.channel.send("It’s not working. You’re blowing wrong, or something.")
+		return 300000; //returning this makes a lockout of 5 minutes
+	}
+	
+	else //remaining chance to do this action (40% chance)
+	{
+		message.channel.send("Ahh you did it! It made the whistle sound, see?... *whistle*")
+		return 300000; //returning this makes a lockout of 5 minutes
+	}
+	return;
+},
+
 };
