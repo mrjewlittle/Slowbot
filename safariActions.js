@@ -71,7 +71,7 @@ whistleWithGrass: function(message, user)
 		return 300000; //returning this makes a lockout of 5 minutes
 	}
 	
-	else //remaining chance to do this action (40% chance)
+	else //remaining chance to do this action (20% chance)
 	{
 		message.channel.send("Ahh you did it! It made the whistle sound, see?... *whistle*")
 		return 300000; //returning this makes a lockout of 5 minutes
