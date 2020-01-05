@@ -373,10 +373,16 @@ function processCommand(message)
 		var lockoutTime = actions.climbTallerTree(message);
 		lockout(message.member, message, lockoutTime);
 	}
+
+	else if (primaryCommand == "whistleWithGrass")
+	{
+		var lockoutTime = actions.whistleWithGrass(message);
+		lockout(message.member, message, lockoutTime);
+	}
 	
 };
 
-bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.Xg55pA.enBCN4Fj81i49WGMHl8ctOkUO6Y")
+bot.login("NTg5MTMxNzI2NzE5MDI1MTgy.XhHqIA.zs46LuaYOOP0ZDJT028w1N3ongs")
 
 
 function movePlayer(message, newCommand)

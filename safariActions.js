@@ -67,7 +67,7 @@ whistleWithGrass: function(message, user)
 	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
 	if (randomChance <= 80) //80 percent chance to do this action
 	{
-		message.channel.send("It’s not working. You’re blowing wrong, or something.")
+		message.channel.send("It’s not working. You’re blowing wrong, or something")
 		return 300000; //returning this makes a lockout of 5 minutes
 	}
 	
@@ -79,4 +79,75 @@ whistleWithGrass: function(message, user)
 	return;
 },
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+watchLion: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 80) //80 percent chance to do this action
+	{
+		message.channel.send("The lion seems to be resting. Interacting with it might not be a good idea")
+		return 300000; //returning this makes a lockout of 5 minutes
+	}
+	
+	else //remaining chance to do this action (20% chance)
+	{
+		message.channel.send("The lion looks like its observing the savannah. It seems to have already acknowledged your presence.")
+		message.channel.send("Now you can try using the command to $approachLion or $hideFromLion")
+		return 300000; //returning this makes a lockout of 5 minutes
+	}
+	return;
+},
+
+approachLion: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 20) //20 percent chance to do this action
+	{
+		message.channel.send("The lion doesn't seem threatened, as it just continues to rest.")
+		message.channel.send("Now you can try using the command to $petLion")
+		return 300000; //returning this makes a lockout of 5 minutes
+	}
+	
+	else //remaining chance to do this action (80% chance)
+	{
+		message.channel.send("The lion stares you down as you come closer. You wonder if you should back away.")
+		return 300000; //returning this makes a lockout of 5 minutes
+	}
+	return;
+},
+
+petLion: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 80) //80 percent chance to do this action
+	{
+		message.channel.send("The lion bites at you and you manage to escape rather unscathed, and you chastise yourself for trying to pet a dangerous animal")
+		return 900000; //returning this makes a lockout of 15 minutes
+	}
+	
+	else //remaining chance to do this action (20% chance)
+	{
+		message.channel.send("Before you even take a step closer, the lion moves farther away. Maybe that's a sign.")
+		return 300000; //returning this makes a lockout of 5 minutes
+	}
+	return;
+},
+
+hideFromLion: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 75) //75 percent chance to do this action
+	{
+		message.channel.send("You decide to hide in a bush from the lion. It doesn't seem to want to do anything while you're not around, because it just stays in its place.")
+		return 900000; //returning this makes a lockout of 15 minutes
+	}
+	
+	else //remaining chance to do this action (15% chance)
+	{
+		message.channel.send("After you hide, the lion begins to walk around the area, before resting in the same place it once was.")
+		return 900000; //returning this makes a lockout of 5 minutes
+	}
+	return;
+},
 };
