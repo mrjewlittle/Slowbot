@@ -6,10 +6,11 @@ class Castaway
 		this.woodCarried = 0;
 		this.waterCarried = 0;
 		this.foodCarried = 0;
-		this.woodLimit = 10;
+		this.woodLimit = 5;
 		this.waterLimit = 5;
 		this.foodLimit = 15;
 		this.strength = 10;
+		this.challengeBuff = 0;
 	}
 	
 	getWoodCarried()
@@ -32,6 +33,11 @@ class Castaway
 		return this.strength;
 	}
 	
+	getChallengeBuff()
+	{
+		return this.challengeBuff;
+	}
+	
 	setWoodCarried(x, message)
 	{
 		if (this.woodCarried + x > this.woodLimit)
@@ -45,8 +51,7 @@ class Castaway
 			return;
 		}
 		this.woodCarried = this.woodCarried + x
-		message.channel.send("You are now carrying " + x + " wood on you")
-		
+		message.channel.send("You are now carrying " + this.woodCarried + " wood on you")
 	}
 	
 	setFoodCarried(x, message)
@@ -62,8 +67,7 @@ class Castaway
 			return;
 		}
 		this.foodCarried = this.foodCarried + x
-		message.channel.send("You are now carrying " + x + " food on you")
-		
+		message.channel.send("You are now carrying " + this.foodCarried + " food on you")
 	}
 	
 	setWaterCarried(x, message)
@@ -79,25 +83,21 @@ class Castaway
 			return;
 		}
 		this.waterCarried = this.waterCarried + x
-		message.channel.send("You are now carrying " + x + " water on you")
-		
+		message.channel.send("You are now carrying " + this.waterCarried + " water on you")
 	}
 	
 	setStrength(x, message)
 	{
-		if (this.woodCarried + x > this.woodLimit)
-		{
-			while(this.woodCarried < this.woodLimit)
-			{
-				this.woodCarried = this.woodCarried + 1;
-			}
-			message.channel.send("You can only pick up some wood until your maximum you can carry")
-			message.channel.send("You are now carrying " + this.woodCarried + " wood")
-			return;
-		}
-		this.woodCarried = this.woodCarried + x
-		message.channel.send("You are now carrying " + x + " wood on you")
-		
+		this.strength = this.strength + x
+		message.channel.send("With this tool. Your strength is now " + this.strength)
+		return;
+	}
+	
+	setChallengeBuff (x, message)
+	{
+		this.challengeBuff = this.challengeBuff + x
+		message.channel.send("You new challenge buff score is " + this.challengeBuff + "%!")
+		return;
 	}
 }
 module.exports.Castaway = Castaway;
