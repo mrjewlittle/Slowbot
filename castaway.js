@@ -6,10 +6,13 @@ class Castaway
 		this.woodCarried = 0;
 		this.waterCarried = 0;
 		this.foodCarried = 0;
-		this.woodLimit = 10;
+		this.woodLimit = 5;
 		this.waterLimit = 5;
 		this.foodLimit = 15;
 		this.strength = 10;
+		this.challengeBuff = 0;
+		this.hasDrank = 0;
+		this.hasEaten = 0;
 	}
 	
 	getWoodCarried()
@@ -30,6 +33,11 @@ class Castaway
 	getStrength()
 	{
 		return this.strength;
+	}
+	
+	getChallengeBuff()
+	{
+		return this.challengeBuff;
 	}
 	
 	setWoodCarried(x, message)
@@ -84,6 +92,13 @@ class Castaway
 	{
 		this.strength = this.strength + x
 		message.channel.send("With this tool. Your strength is now " + this.strength)
+		return;
+	}
+	
+	setChallengeBuff (x, message)
+	{
+		this.challengeBuff = this.challengeBuff + x
+		message.channel.send("You new challenge buff score is " + this.challengeBuff + "%!")
 		return;
 	}
 }
