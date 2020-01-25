@@ -5,13 +5,15 @@ var auth = require('./willbotconfig.json');
 var later = require('later');
 var tribe = require('./tribe.js');
 var castaway = require('./castaway.js');
-const fs = require('fs')
-//const players = require ('./players.json')
+const fs = require('fs');
+const players = require('./players.json');
+
+players.Brennen.name = 'test'; //example
+
 //const tribes = require ('./tribes.json')
 //const time = require ('./time.json')
 var path = require('path');
 const readline = require('readline');
-
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console, {
@@ -20,6 +22,7 @@ logger.add(new logger.transports.Console, {
 logger.level = 'debug';
 // Initialize Discord Bot
 const bot = new DiscordJS.Client()
+
 bot.on('ready', function (evt) 
 {
     logger.info('Connected');
@@ -33,9 +36,6 @@ bot.on('message', (message) =>
 		processCommand(message)
 	}
 });
-
-
-
 
 //Tribes
 const Boran = new tribe.Tribe('boran')
@@ -89,7 +89,6 @@ var backupMinute = 30
 var textFile1 = path.basename('C:/Users/shado/Documents/Slowbot/players.json')
 var textFile2 = path.dirname('C:/Users/shado/Documents/Slowbot/tribes.json')
 var textFile3 = path.dirname('C:/Users/shado/Documents/Slowbot/time.json')
-
 
 
 
@@ -626,7 +625,7 @@ function lockout(user, message, lockoutTime)
 let dayNightTimerID = setInterval(dayNight, 36000000);
 let fireTimerID = setInterval(fireDecay, 3600000);
 let animalTimerID = setInterval(animalAttack, 3600000);
-let backupTimerID = setInterval(backup, 3600000);
+let backupTimerID = setInterval(backup, 10000);
 var isNight = false;
 
 function dayNight()
@@ -1085,9 +1084,13 @@ function checkPlayer(message)
 
 function backup()
 {
-	let data = "Samburu Water storage = " + Samburu.getWaterStorage() + "\nSamburu Food storage = " + Samburu.getFoodStorage() + "\nSamburu Fire level = " +Samburu.getFireLevel() + "\nBoran Water storage = " + Boran.getWaterStorage() + "\nBoran Food storage = " + Boran.getFoodStorage() + "\nBoran Fire level = " +Boran.getFireLevel()
-	fs.writeFile('Backup.txt', data, (err) => { if (err) throw err;})
-		
+	// let data = "Samburu Water storage = " + Samburu.getWaterStorage() + "\nSamburu Food storage = " + Samburu.getFoodStorage() + "\nSamburu Fire level = " +Samburu.getFireLevel() + "\nBoran Water storage = " + Boran.getWaterStorage() + "\nBoran Food storage = " + Boran.getFoodStorage() + "\nBoran Fire level = " +Boran.getFireLevel()
+	// fs.writeFile('Backup.txt', data, (err) => { if (err) throw err;})
+
+	fs.writeFile('players.json', JSON.stringify(players), (err) => {
+		if (err) return console.log(err);
+	});
+
 	//bot.players ["Brennen"] = {food: Brennen.foodCarried}
 	
 	//fs.writeFile ("./players.json", JSON.stringify(client.players, null, 4), err => {if (err) throw err;})
@@ -1153,6 +1156,7 @@ function backup()
 
 function Initialize()
 {
+	Brennen.foodCarried = players.Brennen.food;
 		/*Brennen.foodCarried = playerText[0]
 		Brennen.waterCarried = playerText[1]
 		Burded.foodCarried = playerText[2]
