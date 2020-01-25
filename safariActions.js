@@ -1018,7 +1018,7 @@ checkForTracks: function(message, user)
 
 lookForVultures: function(message, user)
 {
-	message.channel.send("You know circling vultures can sometimes lead to recently dead animals")
+	message.channel.send("You know circling vultures can sometimes lead to recently dead animals").then(msg => {msg.delete(12000)}).catch
 	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
 	if (randomChance <= 80) //40 percent chance to do this action
 	{
@@ -1306,6 +1306,786 @@ pickUpPoop: function(message, user)
 	else
 	{
 		message.channel.send("You summon the courage and dive your hand into the dark hole. You grasp something moving down there! It's a little lizard that could be good roasted over a fire").then(msg => {msg.delete(12000)}).catch
+		return 600001;
+	}
+	return;
+},
+standInShadow: function(message, user)
+{
+	
+		message.channel.send("You can feel the cooler air already.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+approachGiraffes: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("The giraffes stand up to their full height and you realize just how tall they are.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("The giraffes begin to get closer as well. Maybe this isn’t the best idea…").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+
+},
+
+approachElephants: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 100) //50 percent chance to do this action
+	{
+		message.channel.send("These animals shouldn’t be messed with. Maybe you should take a step back.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+
+},	
+
+takeABreak: function(message, user)
+{
+	
+		message.channel.send("After your break, you feel refreshed and ready to go.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+checkShrubbery: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 20) //50 percent chance to do this action
+	{
+		message.channel.send("You check the shrubs and find... nothing. Absolutely nothing.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else if (randomChance > 20 && randomChance <= 40)//remaining chance to do this action (50% chance)
+	{
+		message.channel.send("The shrubs have dark, thorny leaves, not very fun to stick your hand next to.").then(msg => {msg.delete(12000)}).catch
+		return 1800000; //returning this makes a lockout of 10 minutes
+	}
+
+	else if (randomChance > 40 && randomChance <= 60)//remaining chance to do this action (50% chance)
+	{
+		message.channel.send("The shrubbery has some small leaves growing on all its branches.").then(msg => {msg.delete(12000)}).catch
+		return 1800000; //returning this makes a lockout of 10 minutes
+	}
+
+	else if (randomChance > 60 && randomChance <= 80)//remaining chance to do this action (50% chance)
+	{
+		message.channel.send("It's just a large plant.").then(msg => {msg.delete(12000)}).catch
+		return 1800000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else
+	{
+		message.channel.send("There's a small lizard hanging out in the shrubs. It frantically scurries away upon noticing you.").then(msg => {msg.delete(12000)}).catch
+		return 600001;
+	}
+	return;
+},
+
+pickUpTreeBranch: function(message, user)
+{
+	
+		message.channel.send("You pick up the branch and lift it over your head. It's like a sword!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+danceInPlain: function(message, user)
+{
+	
+		message.channel.send("You frolick and show up some Fortnite dance moves.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+runUpHill: function(message, user)
+{
+	
+		message.channel.send("After finishing running up the hill, you need a quick breather.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+stickHandInWater: function(message, user)
+{
+	
+		message.channel.send("Now your hand is wet and you don't have anything to wipe it off on. Did you really gain anything?").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+runHandThroughGrass: function(message, user)
+{
+	
+		message.channel.send("You run your hand through the grass. While some of it feels nice, most of it is coarse and dry.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+tryToCatchBugs: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("You catch a decently sized bug! Unfortunately, it's not edible.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("You try your hardest, but come up empty. Maybe you should try again!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+
+},
+
+yell: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("Your loud yell startles a few birds, but not much else.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("You see a lion pride all perk their head. Probably time to head out ASAP.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+
+},
+
+stompGrass: function(message, user)
+{
+	
+		message.channel.send("You stomp and stomp and stomp, but get nowhere. Maybe the grass doesn't like you.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+approachAardvark: function(message, user)
+{
+	
+		message.channel.send("When you approach, the aardvark runs away in fear.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+tryToStartFire: function(message, user)
+{
+	
+		message.channel.send("Hey, this isn't the camp. Knock it off!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+hideInGrass: function(message, user)
+{
+	
+		message.channel.send("The grass is jsut tall enough to hide you, but maybe it's not the best hiding spot ever.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+yawnLoudly: function(message, user)
+{
+	
+		message.channel.send("How tired are you? Maybe you should take a nap.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+stompInMud: function(message, user)
+{
+	
+		message.channel.send("Nice, you have super dirty shoes now!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+crawlOnGround: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("The ground is super dirty. When you get back up, you have a bunch of mud on your shirt.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("You try to crawl on the ground, but there’s some scary bugs that make you afraid to get down on the ground.").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+},
+
+lookForAnimals: function(message, user)
+{
+	
+		message.channel.send("You don’t see anything around you.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+pickALuckyClover: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 99) //50 percent chance to do this action
+	{
+		message.channel.send("The clover brings no luck; there’s a 1 in 100 chance to find something immensely important, however").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("The idols are hidden in public display; check out your fire pit or water tank and maybe you’ll find it.").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+},
+
+cloudgaze: function(message, user)
+{
+	
+		message.channel.send("The clouds are beautiful at this time of day.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+huntForBugs: function(message, user)
+{
+	
+		message.channel.send("There just aren’t that many bugs!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+rollDownTheHill: function(message, user)
+{
+	
+		message.channel.send("You nearly twist your ankle rolling, and decide that this is a risky endeavor.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+goInsane: function(message, user)
+{
+	
+		message.channel.send("The sky is calling to you… you try to hear it but it’s very quiet and hard to make out what it’s saying… eventually it becomes more clear and you can make out some words… “Wake up, idiot!” You come to and realize a production member has been yelling at you for the last few minutes. Time to get moving!").then(msg => {msg.delete(12000)}).catch
+		return 1200000; //returning this makes a lockout of 10 minutes
+
+},
+
+breakBranch: function(message, user)
+{
+	
+		message.channel.send("The branch snaps fairly easily and falls to the ground, useless.").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+
+},
+
+liftRocks: function(message, user)
+{
+	
+		message.channel.send("You find a smaller rock there, that looks like it has been deliberately planted there. DM Ryan for more information on the rock.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+performABackHandsrping: function(message, user)
+{
+	
+		message.channel.send("You have the energy to do this, but not win every challenge? That’s slightly worrying.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+tryToBeTallerThanTheGiraffe: function(message, user)
+{
+	
+		message.channel.send("??? You… do know how dumb this looks, right?").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+
+},
+
+throwRocks: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("The rocks fall and eventually you lose track of them").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("Nice throw! Maybe you should become a baseball player.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+},
+
+dragFootThroughSand: function(message, user)
+{
+	
+		message.channel.send("You leave a trail similar to the footprints found elsewhere in the desert.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+gazeIntoHorizon: function(message, user)
+{
+	
+		message.channel.send("You are able to talk in the true glory of your surroundings with just this one view.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+searchForPebbles: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("Your search comes up empty. Maybe try somewhere else!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("You end your search with a handful of pebbles. What you’ll do with them is up to you.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+},
+
+hopeForRain: function(message, user)
+{
+	
+		message.channel.send("Your hope for rain comes up fruitless, but that doesn’t mean you should give up.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+makeSandAngel: function(message, user)
+{
+	
+		message.channel.send("When you get up, the sand angel looks alright but not as good as a snow angel.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+sunBathe: function(message, user)
+{
+	
+		message.channel.send("You get a nice tan in the sun and have a relaxed time.").then(msg => {msg.delete(12000)}).catch
+		return 900000; //returning this makes a lockout of 10 minutes
+
+},
+
+collectSnow: function(message, user)
+{
+	
+		message.channel.send("The snow isn’t going to turn into clean water, might as well dump it out.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+yellAtPeople: function(message, user)
+{
+	
+		message.channel.send("They turn around, wave, and then retreat farther away from you.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+eatSnow: function(message, user)
+{
+	
+		message.channel.send("It tastes like snow! Yum?").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+walkOnDune: function(message, user)
+{
+	
+		message.channel.send("The top of the dune brings harsher winds that nearly blow you away.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+runDownHillFast: function(message, user)
+{
+	
+		message.channel.send("You are concerned when you are very sluggish at the end. The scarce food is really taking an impact.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+approachGoats: function(message, user)
+{
+	
+		message.channel.send("The goats all start to herd closer to each other, maybe out of fear").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+throwBottleAtGoats: function(message, user)
+{
+	
+		message.channel.send("The bottle scares the goats who start to scatter").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+chaseGoats: function(message, user)
+{
+	
+		message.channel.send("It becomes clear that the goats are much faster than you. You won’t catch any of them.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+followPrints: function(message, user)
+{
+	
+		message.channel.send("The prints seem to keep going and going and going.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+tryToCoverPrints: function(message, user)
+{
+	
+		message.channel.send("The prints aren’t noticeable at all anymore, but one gust of wind will blow the newly shifted sand off the distinct footprints.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+walkToTheOtherShore: function(message, user)
+{
+	
+		message.channel.send("“It’s cool! The view is a lot different from this side.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+stareAtWater: function(message, user)
+{
+	
+		message.channel.send("It’s a real life oasis and you can hardly believe your eyes. I would stare too!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+climbRightWall: function(message, user)
+{
+	
+		message.channel.send("You get halfway up before falling, a sign that this is a wall which would prefer to remain unclimbed.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+grabWallVine: function(message, user)
+{
+	
+		message.channel.send("The vine snaps when you pull on it.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+standUnderWaterfall: function(message, user)
+{
+	
+		message.channel.send("It’s the highest pressure shower you’ve ever taken; isn’t it wonderful?").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+checkForMarkings: function(message, user)
+{
+	
+		message.channel.send("There’s a faint marking that you’ll need a code to decipher. Where can you find this code….").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+climbCliffs: function(message, user)
+{
+	
+		message.channel.send("You fall while climbing. That’s an hour of no exploration for you.").then(msg => {msg.delete(12000)}).catch
+		return 6000000; //returning this makes a lockout of 10 minutes
+
+},
+
+chaseBirds: function(message, user)
+{
+	
+		message.channel.send("The moment the birds notice you, they fly away in a mass cluster").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+throwRockAtBirds: function(message, user)
+{
+	
+		message.channel.send("The birds begin to swarm you before flying off. What a jerk move!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+peerThroughWindow: function(message, user)
+{
+	
+		message.channel.send("You swear you can see someone move in front of the window… is it a ghost?").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+runHandOverWall: function(message, user)
+{
+	
+		message.channel.send("The wall is dusty and clearly incredibly old, and you worry it might collapse with any more pressure").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+digThroughRubble: function(message, user)
+{
+	
+		message.channel.send("You find an odd looking piece of metal. Perhaps it belongs to whoever owned the building these ruins once were.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+checkBasement: function(message, user)
+{
+	
+		message.channel.send("You hear something drop in the pitch black… nobody should be down here besides you. Run.").then(msg => {msg.delete(12000)}).catch
+		return 900000; //returning this makes a lockout of 10 minutes
+
+},
+
+inspectLeaves: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("The leaves are extremely big and much larger than the leaves on any trees at home. Welcome to the jungle.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("Leaves! These are just like the ones at home.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+},
+
+shakeBranches: function(message, user)
+{
+	
+		message.channel.send("You think you hear something falling, but then realize it’s just another branch.").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+
+},
+
+lickMoss: function(message, user)
+{
+	
+		message.channel.send("... Why?").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+
+},
+
+whistle: function(message, user)
+{
+	
+		message.channel.send("Your loud whistle rings through your surroundings").then(msg => {msg.delete(12000)}).catch
+		return 300000; //returning this makes a lockout of 10 minutes
+
+},
+
+walkInCircles: function(message, user)
+{
+	
+		message.channel.send("After a few minutes of doing this, you realize that you’re going to get yourself lost").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+lookAtBug: function(message, user)
+{
+	
+		message.channel.send("The bug just stares back with menacing eyes, showing that it’s not messing around.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+brushOver: function(message, user)
+{
+	
+		message.channel.send("You need a key to open what’s in the wooden object deep in the jungle").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+checkForTreeHoles: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 50) //50 percent chance to do this action
+	{
+		message.channel.send("Bam! You search the hole and find that a wasp has come charging out and stung you.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else //remaining chance to do this action (50% chance)
+	{
+		message.channel.send("There’s nothing of note in the tree or its holes.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	return;
+},
+
+swingOnVines: function(message, user)
+{
+	
+		message.channel.send("While it’s certainly a lot of fun, you’re no Tarzan. Maybe it’s time to go check something else out.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+kickTree: function(message, user)
+{
+	
+		message.channel.send("The tree doesn’t budge a bit. Now all you have is a busted toe.").then(msg => {msg.delete(12000)}).catch
+		return 900000; //returning this makes a lockout of 10 minutes
+
+},
+
+pokeSnake: function(message, user)
+{
+	
+		message.channel.send("Are you seriously trying this? This snake looks like its about to kill you!").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+climbOverBranch: function(message, user)
+{
+	
+		message.channel.send("You carefully and safely climb over the branch, steering clear of any dangerous hazards").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+stareAtSnake: function(message, user)
+{
+	
+		message.channel.send("You’re losing the staring contest when all of the sudden, the snake lashes out. However, you see it blink as you duck away and you know you’re the true winner. Make sure not to become the snake’s lunch.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+makeFaces: function(message, user)
+{
+	
+		message.channel.send("Nobody in the entire safari notices you making silly faces, so the effect is negligible at best.").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+pickUpSnake: function(message, user)
+{
+	
+		message.channel.send("Enjoy the venom coursing through your body as you spend 2 hours paralyzed in place").then(msg => {msg.delete(12000)}).catch
+		return 12000000; //returning this makes a lockout of 10 minutes
+
+},
+
+crushPlants: function(message, user)
+{
+	
+		message.channel.send("Why’d you have to do that? What did the plants do to you").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+crawlOnTheJungleFloor: function(message, user)
+{
+	
+		message.channel.send("The jungle floor is covered in grasses and moss. Be careful not to upset any of the wild creatures on the ground level").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+jumpInTheAir: function(message, user)
+{
+	
+		message.channel.send("You have fun jumping, but quickly realize that it makes you vulnerable for a snake to swoop down and attack").then(msg => {msg.delete(12000)}).catch
+		return 900000; //returning this makes a lockout of 10 minutes
+
+},
+
+inspectWeirdTree: function(message, user)
+{
+	
+		message.channel.send("There’s some weird fruits hanging from the tree but they don’t look very edible").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+chewOnFlowers: function(message, user)
+{
+	
+		message.channel.send("Yuck, these don't taste too good. Best you spit them out. ").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+
+},
+
+pickBerries: function(message, user)
+{
+	var randomChance = Math.floor(Math.random() * 100) + 1; //creates a random number from 1 to 100. Use for percent chance
+	if (randomChance <= 20) //50 percent chance to do this action
+	{
+		message.channel.send("Your not quite sure what is edible and what isn't. Best not to try picking any").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else if (randomChance > 20 && randomChance <= 40)//remaining chance to do this action (50% chance)
+	{
+		message.channel.send("You only find inedbile berries here. Aw shucks").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+
+	else if (randomChance > 40 && randomChance <= 60)//remaining chance to do this action (50% chance)
+	{
+		message.channel.send("It seems this bush has been picked dry").then(msg => {msg.delete(12000)}).catch
+		return 600000; //returning this makes a lockout of 10 minutes
+	}
+
+	else if (randomChance > 60 && randomChance <= 80)//remaining chance to do this action (50% chance)
+	{
+		message.channel.send("This isn't a berry bush. It's a poison oak bush!").then(msg => {msg.delete(12000)}).catch
+		return 1800000; //returning this makes a lockout of 10 minutes
+	}
+	
+	else
+	{
+		message.channel.send("You manage to find some berries that look good to eat. SCORE").then(msg => {msg.delete(12000)}).catch
 		return 600001;
 	}
 	return;
